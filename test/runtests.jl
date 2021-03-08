@@ -6,6 +6,10 @@ using Test, BenchmarkTools, Base.Threads
 #    ptiread(filename)
 #end
 
+signal = rand(8192*600)
+
+Aweighting = weightingFilter("A-weighting", 8192)
+@btime yA = filt(Aweighting,signal)
 
 @testset "EnvNoise.jl" begin
     # Write your tests here.
