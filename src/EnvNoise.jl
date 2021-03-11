@@ -5,6 +5,6 @@ using DSP
 include("ptiread.jl")
 include("weightingFilter.jl")
 
-export filt
+export filt, welch_pgram
 
 end
