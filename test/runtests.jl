@@ -19,7 +19,7 @@ welch_pgram(signal[:,1], 81920, 0;
     onesided=eltype(s)<:Real,
     nfft=nextfastfft(n),
     fs=Fs,
-    window=hanning)
+    window=hamming)
 
 @testset "EnvNoise.jl" begin
     # Write your tests here.
