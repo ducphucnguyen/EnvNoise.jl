@@ -8,6 +8,7 @@ DSP = "717857b8-e6f2-59f4-9121-6e50c889abd2"
 JLD = "4138dd39-2aa7-5051-a626-17a0bb65d9c8"
 
 [compat]
+DSP = "0.6"
 julia = "1"
 
 [extras]
