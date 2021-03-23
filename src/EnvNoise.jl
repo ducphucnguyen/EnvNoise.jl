@@ -7,6 +7,6 @@ include("weightingFilter.jl")
 include("pwelch.jl")
 
 
-export filt, welch_pgram
+export filt, welch_pgram, Windows
 
 end

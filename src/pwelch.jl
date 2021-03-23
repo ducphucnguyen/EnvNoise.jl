@@ -1,5 +1,8 @@
 export pwelch,
-    windowproperty
+    windowproperty,
+    hanning,
+    hamming,
+    rect
 
 
 using DSP
@@ -149,3 +152,4 @@ ovlap = Int(0.5*nfft)
 
  pxx, f =  pwelch(signal,hanning(nfft),ovlap,nfft,Fs)
  pxx, f =  pwelch(signal,hanning(nfft),ovlap,nfft,Fs,"power")
+=#
