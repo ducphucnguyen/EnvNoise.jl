@@ -12,13 +12,15 @@ using JLD
 #Aweighting = weightingFilter("A-weighting", 8192)
 #@btime yA = filt(Aweighting,signal)
 
-dir = "R:\\CMPH-Windfarm Field Study\\Hallett\\set1\\"
+dir = "R:\\CMPH-Windfarm Field Study\\Hallett\\set2\\"
 allpti = filter(x->endswith(x, ".pti"), readdir(dir; join=true))
 
 #filename = "R:\\CMPH-Windfarm Field Study\\Hallett\\set1\\Recording-3.1.pti"
-@time for i=1:100
+for i=1#:100
+
     filename = allpti[i]
     signal, Fs, Date, Time = ptiread(filename)
+
 
     res = 0.1
     nfft = floor(Int,Fs/res)
@@ -30,8 +32,9 @@ allpti = filter(x->endswith(x, ".pti"), readdir(dir; join=true))
     set_i = filename[38:41]
     name_i = filename[43:end-4]
     savedir = "R:\\CMPH-Windfarm Field Study\\Duc Phuc Nguyen\\3. Spectrum quantification\\Hallett_spectrum"
-    save("$savedir\\$set_i-$name_i.jld", "pxx", pxx, "date", Date,"time",Time) # save spectrum
+    #save("$savedir\\$set_i-$name_i.jld", "pxx", pxx, "date", Date,"time",Time) # save spectrum
     #save("$savedir\\info-$set_i-$name_i.jld", "date", Date,"time",Time) # save DateTime
+
 end
 
 #pxx2 = load("pxx2.jld")
@@ -45,6 +48,6 @@ end
 
 
 
-@testset "EnvNoise.jl" begin
+#@testset "EnvNoise.jl" begin
     # Write your tests here.
-end
+#end

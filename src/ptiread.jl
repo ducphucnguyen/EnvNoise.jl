@@ -21,20 +21,29 @@ function ptiread(filename::AbstractString)
         end
     end
 
+    # determine start header line
+    st_ref = 2
+    for i=1:5
+        if cmp("[SETUP START]",header[i]) == 0 # position of this line
+            st_ref = i
+            #println(st_ref)
+        end
+    end
+
     # extract general info
-    RECInfoSectionSize = parse(Int64, match(r"(?<=RECInfoSectionSize=)(\d+)", header[4]).match)
-    RECInfoSectionPos = parse(Int64, match(r"(?<=RECInfoSectionPos=)(\d+)", header[5]).match)
-    SampleFrequency = parse(Int64, match(r"(?<=SampleFrequency=)(\d+)", header[6]).match)
-    NoChannels = parse(Int8, match(r"(?<=NoChannels=)(\d+)", header[7]).match)
-    OffsetStopSample = parse(Int64, match(r"(?<=OffsetStopSample=)(\d+)", header[13]).match)
-    Date = header[14][6:end]
-    Time = header[15][6:end]
+    RECInfoSectionSize = parse(Int64, match(r"(?<=RECInfoSectionSize=)(\d+)", header[st_ref+2]).match)
+    RECInfoSectionPos = parse(Int64, match(r"(?<=RECInfoSectionPos=)(\d+)", header[st_ref+3]).match)
+    SampleFrequency = parse(Int64, match(r"(?<=SampleFrequency=)(\d+)", header[st_ref+4]).match)
+    NoChannels = parse(Int8, match(r"(?<=NoChannels=)(\d+)", header[st_ref+5]).match)
+    OffsetStopSample = parse(Int64, match(r"(?<=OffsetStopSample=)(\d+)", header[st_ref+11]).match)
+    Date = header[st_ref+12][6:end]
+    Time = header[st_ref+13][6:end]
 
     # extract correction for each channels
     CorrectionFactor = Array{Float64,1}(undef, NoChannels)
 
     for channel=1:NoChannels
-        k = 15 + (channel-1)*10 + 4
+        k = 15 + (channel-1)*10 + 4 + (st_ref-2)
 
         cfactor = match(r"(?<=CorrectionFactor=)(-?\ *[0-9]+\.?[0-9]*(?:[Ee]\ *-?\ *[0-9]+)?)",
             header[k])
